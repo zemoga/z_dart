@@ -5,6 +5,10 @@ import 'package:rxdart/rxdart.dart';
 
 import '../../core.dart';
 
+@Deprecated(
+  'Use `on<Event>` mechanism together with'
+  '`Emitter.forEachAsResource<T>` extension',
+)
 abstract class Rope<I, O> extends Bloc<I, Resource<O>> {
   Rope() : super(Resource.initial());
 
@@ -33,6 +37,10 @@ abstract class Rope<I, O> extends Bloc<I, Resource<O>> {
   Stream<O> operation(I param);
 }
 
+@Deprecated(
+  'Use `on<Event>` mechanism together with'
+  '`Emitter.forEachAsResource<T>` extension',
+)
 class SimpleRope<I, O> extends Rope<I, O> {
   final Stream<O> Function(I) operationMapper;
 

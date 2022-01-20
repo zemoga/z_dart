@@ -5,6 +5,10 @@ import 'package:bloc/bloc.dart';
 import '../../core.dart';
 import 'rope.dart';
 
+@Deprecated(
+  'Use `on<Event>` mechanism together with'
+  '`Emitter.forEachAsResource<T>` extension',
+)
 abstract class ViewCubit<T> extends Cubit<T> {
   ViewCubit(T state) : super(state);
 
@@ -24,6 +28,10 @@ abstract class ViewCubit<T> extends Cubit<T> {
 }
 
 extension RopeExt<I, O> on Rope<I, O> {
+  @Deprecated(
+    'Use `on<Event>` mechanism together with'
+    '`Emitter.forEachAsResource<T>` extension',
+  )
   void listenResource(
     ViewCubit cubit, {
     void Function(Resource<O> value)? onResource,
