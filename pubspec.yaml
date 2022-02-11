@@ -1,6 +1,6 @@
 name: z_dart
 description: A starting point for Dart libraries or applications.
-version: 1.0.0-dev.2
+version: 1.0.0-dev.3
 publish_to: 'none'
 
 environment:
@@ -10,7 +10,6 @@ dependencies:
   intl: ^0.17.0
   uuid: ^3.0.4
   rxdart: ^0.27.3
-  bloc: ^7.1.0
   http: ^0.13.3
   dartz: ^0.10.1
 
