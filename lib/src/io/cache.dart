@@ -44,3 +44,65 @@ class Cache<T> {
     _subject.add(data);
   }
 }
+
+///
+mixin CollectionCacheMixin<T> on Cache<Map<String, T>> {
+  Stream<List<T>> get values {
+    return stream.map((event) => event.values.toList());
+  }
+
+  Stream<List<T>> valuesWhere(
+    bool Function(T value) test,
+  ) {
+    return values.map((event) => event.where(test).toList());
+  }
+
+  Stream<T?> valueOrNull(String key) {
+    return stream.map((event) => event[key]);
+  }
+
+  Stream<T> valueOrElse(
+    String key, {
+    required T Function() orElse,
+  }) {
+    return valueOrNull(key).map((event) => event ?? orElse());
+  }
+
+  Future<bool> contains(String key) {
+    return stream.first.then((map) => map.containsKey(key));
+  }
+
+  Future<void> add(String key, T value) {
+    return stream.first.then((map) => map..[key] = value).then(emit);
+  }
+
+  Future<void> addAll(Map<String, T> other) {
+    return stream.first.then((map) => map..addAll(other)).then(emit);
+  }
+
+  Future<void> replaceAll(Map<String, T> other) {
+    return stream.first
+        .then(
+          (map) => map
+            ..clear()
+            ..addAll(other),
+        )
+        .then(emit);
+  }
+
+  Future<void> remove(String key) {
+    return stream.first.then((map) => map..remove(key)).then(emit);
+  }
+
+  Future<void> clear() {
+    return stream.first.then((map) => map..clear()).then(emit);
+  }
+}
+
+///
+class CollectionCache<T> extends Cache<Map<String, T>>
+    with CollectionCacheMixin<T> {
+  CollectionCache() : super({});
+
+  CollectionCache.from(Map<String, T> data) : super(data);
+}
