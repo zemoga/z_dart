@@ -35,6 +35,7 @@ class EntityCollectionCache<T extends Entity> extends CollectionCache<T>
       : super.from(entities.toMap());
 }
 
+@Deprecated('This will be removed in a future version')
 extension LegacyCacheExt<K extends ValueObject, V extends Entity<K>>
     on LegacyCache<K, V> {
   Future<void> putEntity(V entity) => this.put(entity.id, entity);

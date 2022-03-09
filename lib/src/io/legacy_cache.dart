@@ -1,6 +1,7 @@
 import 'package:z_dart/async.dart';
 
 ///
+@Deprecated('This will be removed in a future version')
 abstract class LegacyCache<K, V> {
   // This Subject is intended to be broadcasting while
   // the app is active so new events are propagated in a reactive way
@@ -47,6 +48,7 @@ abstract class LegacyCache<K, V> {
 }
 
 ///
+@Deprecated('Use CollectionCache instead')
 class MemoryCache<K, V> extends LegacyCache<K, V> {
   final _memory = <K, V>{};
 
