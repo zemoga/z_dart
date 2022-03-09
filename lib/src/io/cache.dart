@@ -18,7 +18,7 @@ class CachePolicy {
 }
 
 ///
-abstract class Cache<K, V> {
+abstract class LegacyCache<K, V> {
   // This Subject is intended to be broadcasting while
   // the app is active so new events are propagated in a reactive way
   //
@@ -26,7 +26,7 @@ abstract class Cache<K, V> {
   // ignore: close_sinks
   final _valuesSubject = BehaviorSubject<List<V>>();
 
-  Cache() {
+  LegacyCache() {
     invalidate();
   }
 
@@ -64,7 +64,7 @@ abstract class Cache<K, V> {
 }
 
 ///
-class MemoryCache<K, V> extends Cache<K, V> {
+class MemoryCache<K, V> extends LegacyCache<K, V> {
   final _memory = <K, V>{};
 
   @override

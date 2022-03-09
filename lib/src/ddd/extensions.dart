@@ -2,7 +2,8 @@ import '../../io.dart';
 import 'entity.dart';
 import 'value_object.dart';
 
-extension CacheExt<K extends ValueObject, V extends Entity<K>> on Cache<K, V> {
+extension LegacyCacheExt<K extends ValueObject, V extends Entity<K>>
+    on LegacyCache<K, V> {
   Future<void> putEntity(V entity) => this.put(entity.id, entity);
 
   Future<void> putEntities(List<V> entityList) {
