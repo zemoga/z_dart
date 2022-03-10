@@ -1,8 +1,11 @@
+import 'package:z_dart/core.dart';
+
 import 'value_object.dart';
 
-abstract class Entity<T extends ValueObject> {
+abstract class Entity<T extends ValueObject> implements Identifiable<T> {
   const Entity(this.id);
 
+  @override
   final T id;
 
   @override
@@ -12,14 +15,4 @@ abstract class Entity<T extends ValueObject> {
 
   @override
   int get hashCode => id.hashCode;
-}
-
-extension IterableExt<E extends Entity> on Iterable<E> {
-  /// Creates a [Map] containing the elements of this [Iterable].
-  ///
-  /// The map uses the [String] representation of the entities IDs
-  /// of this iterable as keys, and the corresponding entities as values.
-  Map<String, E> toMap() {
-    return {for (var entity in this) entity.id.toString(): entity};
-  }
 }
