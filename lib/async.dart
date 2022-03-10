@@ -1,8 +1,8 @@
-library async;
+library z.dart.async;
 
 export 'dart:async';
 
 export 'package:rxdart/rxdart.dart';
 
-export 'src/async/future.dart';
-export 'src/async/stream.dart';
+part 'src/async/future.dart';
+part 'src/async/stream.dart';

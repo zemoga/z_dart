@@ -1,5 +1,5 @@
-library convert;
+library z.dart.convert;
 
 export 'dart:convert';
 
-export 'src/convert/json.dart';
+part 'src/convert/json.dart';

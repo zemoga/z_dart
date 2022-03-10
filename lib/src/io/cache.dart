@@ -1,5 +1,4 @@
-import 'package:z_dart/async.dart';
-import 'package:z_dart/core.dart';
+part of z.dart.io;
 
 ///
 class CachePolicy {

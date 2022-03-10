@@ -1,8 +1,4 @@
-import 'package:z_dart/core.dart';
-import 'package:z_dart/io.dart';
-
-import 'entity.dart';
-import 'value_object.dart';
+part of z.dart.ddd;
 
 ///
 @Deprecated('Use IdentifiableCollectionCacheMixin instead.')

@@ -1,3 +1,5 @@
+part of z.dart.ddd;
+
 ///
 abstract class ValueObject {}
 

@@ -1,4 +1,4 @@
-import 'dart:async';
+part of z.dart.async;
 
 extension FutureDoExtensions<T> on Future<T> {
   Future<T> doOnValue(

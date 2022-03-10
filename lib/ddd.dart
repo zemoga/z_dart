@@ -1,5 +1,8 @@
-library ddd;
+library z.dart.ddd;
 
-export 'src/ddd/entity.dart';
-export 'src/ddd/extensions.dart';
-export 'src/ddd/value_object.dart';
+import 'core.dart' show Identifiable, IdentifiableIterableExt;
+import 'io.dart' show CollectionCacheMixin, CollectionCache, LegacyCache;
+
+part 'src/ddd/entity.dart';
+part 'src/ddd/extensions.dart';
+part 'src/ddd/value_object.dart';

@@ -1,7 +1,4 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:http/http.dart';
+part of z.dart.io;
 
 class HttpException implements IOException {
   final int statusCode;

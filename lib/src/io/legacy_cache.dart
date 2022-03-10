@@ -1,4 +1,4 @@
-import 'package:z_dart/async.dart';
+part of z.dart.io;
 
 ///
 @Deprecated('This will be removed in a future version')

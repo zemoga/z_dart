@@ -1,6 +1,4 @@
-import 'package:z_dart/core.dart';
-
-import 'value_object.dart';
+part of z.dart.ddd;
 
 abstract class Entity<T extends ValueObject> implements Identifiable<T> {
   const Entity(this.id);
