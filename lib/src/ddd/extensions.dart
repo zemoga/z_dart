@@ -5,6 +5,7 @@ import 'entity.dart';
 import 'value_object.dart';
 
 ///
+@Deprecated('Use IdentifiableCollectionCacheMixin instead.')
 mixin EntityCollectionCacheMixin<T extends Entity>
     implements CollectionCacheMixin<T> {
   Future<bool> containsEntity(T entity) {
@@ -29,6 +30,7 @@ mixin EntityCollectionCacheMixin<T extends Entity>
 }
 
 ///
+@Deprecated('Use IdentifiableCollectionCache instead.')
 class EntityCollectionCache<T extends Entity> extends CollectionCache<T>
     with EntityCollectionCacheMixin<T> {
   EntityCollectionCache() : super();
