@@ -1,4 +1,5 @@
 import 'package:z_dart/async.dart';
+import 'package:z_dart/core.dart';
 
 ///
 class CachePolicy {
@@ -112,4 +113,37 @@ class CollectionCache<T> extends Cache<Map<String, T>>
     final _data = Map.of(data);
     super.emit(_data);
   }
+}
+
+///
+mixin IdentifiableCollectionCacheMixin<T extends Identifiable>
+    implements CollectionCacheMixin<T> {
+  Future<bool> containsObject(T entity) {
+    return contains(entity.id.toString());
+  }
+
+  Future<void> addObject(T other) {
+    return add(other.id.toString(), other);
+  }
+
+  Future<void> addAllObjects(List<T> others) {
+    return addAll(others.toMap());
+  }
+
+  Future<void> replaceAllObjects(List<T> others) {
+    return replaceAll(others.toMap());
+  }
+
+  Future<void> removeObject(T other) {
+    return remove(other.id.toString());
+  }
+}
+
+///
+class IdentifiableCollectionCache<T extends Identifiable>
+    extends CollectionCache<T> with IdentifiableCollectionCacheMixin<T> {
+  IdentifiableCollectionCache() : super();
+
+  IdentifiableCollectionCache.from(Iterable<T> identifiables)
+      : super.from(identifiables.toMap());
 }
