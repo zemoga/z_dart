@@ -105,4 +105,11 @@ class CollectionCache<T> extends Cache<Map<String, T>>
   CollectionCache() : super({});
 
   CollectionCache.from(Map<String, T> data) : super(data);
+
+  @override
+  void emit(Map<String, T> data) {
+    // Ensure cache is provided with a mutable data map.
+    final _data = Map.of(data);
+    super.emit(_data);
+  }
 }
