@@ -1,12 +1,12 @@
-library core;
+library z.dart.core;
 
 export 'package:dartz/dartz.dart' hide State, StateMonad, StateT, StateTMonad;
 
-export 'src/core/date_time.dart';
-export 'src/core/identifiable.dart';
-export 'src/core/iterable.dart';
-export 'src/core/map.dart';
-export 'src/core/paged_list.dart';
-export 'src/core/resource.dart';
-export 'src/core/standard.dart';
-export 'src/core/string.dart';
+part 'src/core/date_time.dart';
+part 'src/core/identifiable.dart';
+part 'src/core/iterable.dart';
+part 'src/core/map.dart';
+part 'src/core/paged_list.dart';
+part 'src/core/resource.dart';
+part 'src/core/standard.dart';
+part 'src/core/string.dart';

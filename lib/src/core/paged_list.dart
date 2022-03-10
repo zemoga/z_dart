@@ -1,3 +1,5 @@
+part of z.dart.core;
+
 class PagedList<E> {
   final int totalElements;
   final List<E> elements;

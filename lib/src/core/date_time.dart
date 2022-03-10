@@ -1,3 +1,5 @@
+part of z.dart.core;
+
 extension DateTimeExt on DateTime {
   DateTime copyWith({
     int? year,

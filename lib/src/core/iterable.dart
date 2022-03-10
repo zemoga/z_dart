@@ -1,3 +1,5 @@
+part of z.dart.core;
+
 extension IterableExt<E> on Iterable<E> {
   bool containsEvery(Iterable<E>? other) {
     if (other == null) return false;

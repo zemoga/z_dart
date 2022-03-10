@@ -1,3 +1,5 @@
+part of z.dart.core;
+
 abstract class Resource<T> {
   const Resource();
 
