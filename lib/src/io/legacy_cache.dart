@@ -48,7 +48,7 @@ abstract class LegacyCache<K, V> {
 }
 
 ///
-@Deprecated('Use CollectionCache instead')
+@Deprecated('Use CollectionCache or IdentifiableCollectionCache instead')
 class MemoryCache<K, V> extends LegacyCache<K, V> {
   final _memory = <K, V>{};
 
