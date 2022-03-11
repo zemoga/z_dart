@@ -54,6 +54,7 @@ abstract class EntityId extends SingleValueObject<String>
 }
 
 ///
+@Deprecated('Use EntityId instead. This will be removed in a future version')
 abstract class NumericId extends SingleValueObject<int>
     implements Comparable<NumericId> {
   const NumericId(int value) : super(value);
@@ -66,15 +67,5 @@ abstract class NumericId extends SingleValueObject<int>
 }
 
 ///
-abstract class AlphanumericId extends SingleValueObject<String>
-    implements Comparable<AlphanumericId> {
-  const AlphanumericId(String value) : super(value);
-
-  bool get isValid => value.isNotEmpty;
-
-  @override
-  String toString() => value;
-
-  @override
-  int compareTo(AlphanumericId other) => value.compareTo(other.value);
-}
+@Deprecated('Use EntityId instead. This will be removed in a future version')
+typedef AlphanumericId = EntityId;
