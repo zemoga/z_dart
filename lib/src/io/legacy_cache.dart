@@ -14,24 +14,41 @@ abstract class LegacyCache<K, V> {
     invalidate();
   }
 
+  @Deprecated("Use 'values' instead")
   Stream<List<V>> get snapshots => _valuesSubject.stream;
+
+  Stream<List<V>> get values => snapshots;
 
   Future<void> invalidate() =>
       getAll().then((values) => _valuesSubject.sink.add(values));
 
   Future<bool> contains(K key);
 
+  @Deprecated("Use 'valueOrNull' instead")
   Future<V?> getOrNull(K key);
 
+  Stream<V?> valueOrNull(K key) => getOrNull(key).asStream();
+
+  @Deprecated("Use 'valueOrElse' instead")
   Future<V> getOrElse(K key, {required FutureOr<V> Function() orElse}) =>
       getOrNull(key).then((value) => value ?? orElse());
 
+  Stream<V?> valueOrElse(K key, {required FutureOr<V> Function() orElse}) =>
+      getOrElse(key, orElse: orElse).asStream();
+
+  @Deprecated("Use 'values.first' instead")
   Future<List<V>> getAll();
 
+  @Deprecated("Use 'add' instead")
   Future<void> put(K key, V value) =>
       onPut({key: value}).then((_) => invalidate());
 
+  Future<void> add(K key, V value) => put(key, value);
+
+  @Deprecated("Use 'addAll' instead")
   Future<void> putAll(Map<K, V> map) => onPut(map).then((_) => invalidate());
+
+  Future<void> addAll(Map<K, V> map) => putAll(map);
 
   Future<void> replaceAll(Map<K, V> map) =>
       onClear().then((_) => onPut(map)).then((_) => invalidate());
