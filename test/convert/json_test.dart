@@ -27,7 +27,11 @@ void main() {
   });
 
   test('flatten JSON Tree List', () {
-    final result = jsonFlattenTreeList(jsonTreeList, 'name', 'children');
+    final result = jsonFlattenTreeList(
+      jsonTreeList,
+      'children',
+      _nodeIdGenerator,
+    );
 
     expect(result, hasLength(8));
 
@@ -56,8 +60,8 @@ void main() {
   test('flatten JSON Tree ignoring invalid children value', () {
     final result = jsonFlattenTreeList(
       jsonTreeWithInvalidChildrenValue,
-      'name',
       'children',
+      _nodeIdGenerator,
     );
 
     expect(result[0].containsKey('childId'), isFalse);
@@ -65,11 +69,21 @@ void main() {
   });
 
   test('ignores invalid JSON Tree List', () {
-    final result =
-        jsonFlattenTreeList(jsonTreeListWithInvalidType, 'id', 'children');
+    final result = jsonFlattenTreeList(
+      jsonTreeListWithInvalidType,
+      'children',
+      _nodeIdGenerator,
+    );
 
     expect(result, isEmpty);
   });
+}
+
+/// Generate the ID used to bidirectionally link nodes to sub-nodes
+String _nodeIdGenerator(Map<String, dynamic> node) {
+  final ancestorIds = node['ancestorId'] ?? [];
+  final id = node['name'] ?? '';
+  return [...ancestorIds, id].join('_').hashCode.toString();
 }
 
 const jsonTreeList = [

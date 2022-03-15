@@ -48,16 +48,9 @@ extension _FlatNode on Map<String, dynamic> {
 
 List<Map<String, dynamic>> jsonFlattenTreeList(
   List nodes,
-  String nodeIdKey,
   String subNodesEntryKey,
+  String Function(Map<String, dynamic>) nodeIdGenerator,
 ) {
-  /// Generate the ID used to bidirectionally link nodes to sub-nodes
-  String generateId(Map<String, dynamic> node) {
-    final ancestorIds = node.ancestorIds;
-    final id = node[nodeIdKey];
-    return [...ancestorIds, id].join('_').hashCode.toString();
-  }
-
   final flatNodes = <Map<String, dynamic>>[];
   // Ensure nodes are valid JSON objects
   final _nodes = nodes.whereType<Map<String, dynamic>>().toList();
@@ -65,7 +58,7 @@ List<Map<String, dynamic>> jsonFlattenTreeList(
   for (var node in _nodes) {
     // Clone node and add the relational "id" entry to it.
     final _node = Map.of(node);
-    _node.id = generateId(_node);
+    _node.id = nodeIdGenerator(_node);
     // Add node to results
     flatNodes.add(_node);
     // Traverse the sub-nodes
@@ -80,12 +73,12 @@ List<Map<String, dynamic>> jsonFlattenTreeList(
         return _subNode;
       }).toList();
       // Add sub-nodes IDs to node to create parent-to-child relationship
-      _node.childIds = _subNodes.map(generateId).toList();
+      _node.childIds = _subNodes.map(nodeIdGenerator).toList();
       // Process sub-nodes recursively
       final flatSubNodes = jsonFlattenTreeList(
         _subNodes,
-        nodeIdKey,
         subNodesEntryKey,
+        nodeIdGenerator,
       );
       // Add sub-nodes to results
       flatNodes.addAll(flatSubNodes);
