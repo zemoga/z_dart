@@ -12,6 +12,6 @@ extension IdentifiableIterableExt<E extends Identifiable> on Iterable<E> {
   /// The map uses the [String] representation of the IDs
   /// of this iterable as keys, and the corresponding elements as values.
   Map<String, E> toMap() {
-    return {for (var element in this) element.id.toString(): element};
+    return associateBy((element) => element.id.toString());
   }
 }
