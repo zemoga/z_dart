@@ -117,8 +117,8 @@ class CollectionCache<T> extends Cache<Map<String, T>>
 ///
 mixin IdentifiableCollectionCacheMixin<T extends Identifiable>
     implements CollectionCacheMixin<T> {
-  Future<bool> containsObject(T entity) {
-    return contains(entity.id.toString());
+  Future<bool> containsObject(T object) {
+    return contains(object.id.toString());
   }
 
   Future<void> addObject(T other) {
