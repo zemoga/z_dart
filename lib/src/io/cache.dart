@@ -35,7 +35,7 @@ class Cache<T> {
   /// The current [data].
   T get data => _data;
 
-  /// The current value stream.
+  /// The current stream of [data] elements.
   Stream<T> get stream => _subject.stream;
 
   /// Updates the [data] to the provided [data].
@@ -47,9 +47,7 @@ class Cache<T> {
 
 ///
 mixin CollectionCacheMixin<T> on Cache<Map<String, T>> {
-  Stream<List<T>> get values {
-    return stream.map((event) => event.values.toList());
-  }
+  Stream<List<T>> get values => stream.map((event) => event.values.toList());
 
   Stream<List<T>> valuesWhere(
     bool Function(T value) test,
@@ -69,33 +67,31 @@ mixin CollectionCacheMixin<T> on Cache<Map<String, T>> {
   }
 
   Future<bool> contains(String key) {
-    return stream.first.then((map) => map.containsKey(key));
+    return Future(() => data.containsKey(key));
   }
 
   Future<void> add(String key, T value) {
-    return stream.first.then((map) => map..[key] = value).then(emit);
+    return Future(() => data..[key] = value).then(emit);
   }
 
   Future<void> addAll(Map<String, T> other) {
-    return stream.first.then((map) => map..addAll(other)).then(emit);
+    return Future(() => data..addAll(other)).then(emit);
   }
 
   Future<void> replaceAll(Map<String, T> other) {
-    return stream.first
-        .then(
-          (map) => map
-            ..clear()
-            ..addAll(other),
-        )
-        .then(emit);
+    return Future(
+      () => data
+        ..clear()
+        ..addAll(other),
+    ).then(emit);
   }
 
   Future<void> remove(String key) {
-    return stream.first.then((map) => map..remove(key)).then(emit);
+    return Future(() => data..remove(key)).then(emit);
   }
 
   Future<void> clear() {
-    return stream.first.then((map) => map..clear()).then(emit);
+    return Future(() => data..clear()).then(emit);
   }
 }
 
