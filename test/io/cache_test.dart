@@ -54,7 +54,7 @@ void main() {
     late CollectionCache collectionCache;
     setUp(() {
       final data = {'dftlKey': 100};
-      collectionCache = CollectionCache.from(data);
+      collectionCache = CollectionCache(initialData: data);
     });
     tearDown(() {
       collectionCache.clear();
@@ -75,7 +75,7 @@ void main() {
     late CollectionCache collectionCache;
     setUp(() {
       final data = Map<String, int>.unmodifiable({'dftlKey': 100});
-      collectionCache = CollectionCache.from(data);
+      collectionCache = CollectionCache(initialData: data);
     });
     tearDown(() {
       collectionCache.clear();

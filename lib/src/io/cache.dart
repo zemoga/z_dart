@@ -98,16 +98,12 @@ mixin CollectionCacheMixin<T> on Cache<Map<String, T>> {
 ///
 class CollectionCache<T> extends Cache<Map<String, T>>
     with CollectionCacheMixin<T> {
-  CollectionCache() : super({});
+  CollectionCache({
+    Map<String, T> initialData = const {},
+  }) : super(Map.of(initialData));
 
-  CollectionCache.from(Map<String, T> data) : super(data);
-
-  @override
-  void emit(Map<String, T> data) {
-    // Ensure cache is provided with a mutable data map.
-    final _data = Map.of(data);
-    super.emit(_data);
-  }
+  @Deprecated("Use default constructor instead")
+  CollectionCache.from(Map<String, T> data) : this(initialData: data);
 }
 
 ///
@@ -137,8 +133,11 @@ mixin IdentifiableCollectionCacheMixin<T extends Identifiable>
 ///
 class IdentifiableCollectionCache<T extends Identifiable>
     extends CollectionCache<T> with IdentifiableCollectionCacheMixin<T> {
-  IdentifiableCollectionCache() : super();
+  IdentifiableCollectionCache({
+    Map<String, T> initialData = const {},
+  }) : super(initialData: initialData);
 
-  IdentifiableCollectionCache.from(Iterable<T> identifiableList)
-      : super.from(identifiableList.associateBy((e) => e.id.toString()));
+  IdentifiableCollectionCache.from(
+    Iterable<T> identifiableList,
+  ) : super(initialData: identifiableList.associateBy((e) => e.id.toString()));
 }
