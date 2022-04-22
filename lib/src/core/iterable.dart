@@ -22,7 +22,7 @@ extension IterableExt<E> on Iterable<E> {
   ///
   /// The returned map preserves the entry iteration order of the original
   /// collection.
-  Map<K, E> associateBy<K>(K Function(E) keySelector) {
+  Map<K, E> associateBy<K>(K Function(E e) keySelector) {
     return {for (var element in this) keySelector(element): element};
   }
 }

@@ -122,11 +122,11 @@ mixin IdentifiableCollectionCacheMixin<T extends Identifiable>
   }
 
   Future<void> addAllObjects(List<T> others) {
-    return addAll(others.toMap());
+    return addAll(others.associateBy((e) => e.id.toString()));
   }
 
   Future<void> replaceAllObjects(List<T> others) {
-    return replaceAll(others.toMap());
+    return replaceAll(others.associateBy((e) => e.id.toString()));
   }
 
   Future<void> removeObject(T other) {
@@ -139,6 +139,6 @@ class IdentifiableCollectionCache<T extends Identifiable>
     extends CollectionCache<T> with IdentifiableCollectionCacheMixin<T> {
   IdentifiableCollectionCache() : super();
 
-  IdentifiableCollectionCache.from(Iterable<T> identifiables)
-      : super.from(identifiables.toMap());
+  IdentifiableCollectionCache.from(Iterable<T> identifiableList)
+      : super.from(identifiableList.associateBy((e) => e.id.toString()));
 }
