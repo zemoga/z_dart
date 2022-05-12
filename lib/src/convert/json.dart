@@ -7,19 +7,19 @@ List jsonFilterTreeList(
 ) {
   final filterNodes = [];
   // Ensure nodes are valid JSON objects
-  final _nodes = nodes.whereType<Map<String, dynamic>>().toList();
+  final validNodes = nodes.whereType<Map<String, dynamic>>().toList();
   // Traverse the nodes
-  for (var node in _nodes) {
-    final filterNode = Map.of(node);
+  for (var element in validNodes) {
+    final node = Map.of(element);
     // Process sub-nodes from unfiltered parent
-    if (condition(filterNode)) {
+    if (condition(node)) {
       // Add node to results
-      filterNodes.add(filterNode);
+      filterNodes.add(node);
       // Traverse the sub-nodes
-      final subNodes = filterNode.remove(subNodesEntryKey);
+      final subNodes = node.remove(subNodesEntryKey);
       if (subNodes is List && subNodes.isNotEmpty) {
         // Process sub-nodes recursively
-        filterNode[subNodesEntryKey] =
+        node[subNodesEntryKey] =
             jsonFilterTreeList(subNodes, subNodesEntryKey, condition);
       }
     }
@@ -53,30 +53,30 @@ List<Map<String, dynamic>> jsonFlattenTreeList(
 ) {
   final flatNodes = <Map<String, dynamic>>[];
   // Ensure nodes are valid JSON objects
-  final _nodes = nodes.whereType<Map<String, dynamic>>().toList();
+  final validNodes = nodes.whereType<Map<String, dynamic>>().toList();
   // Traverse the nodes
-  for (var node in _nodes) {
+  for (var element in validNodes) {
     // Clone node and add the relational "id" entry to it.
-    final _node = Map.of(node);
-    _node.id = nodeIdGenerator(_node);
+    final node = Map.of(element);
+    node.id = nodeIdGenerator(node);
     // Add node to results
-    flatNodes.add(_node);
+    flatNodes.add(node);
     // Traverse the sub-nodes
-    final subNodes = _node.remove(subNodesEntryKey);
+    final subNodes = node.remove(subNodesEntryKey);
     if (subNodes is List && subNodes.isNotEmpty) {
       // Clone sub-nodes and add the relational entries to it.
-      final _subNodes =
-          subNodes.whereType<Map<String, dynamic>>().map((subNode) {
-        final _subNode = Map.of(subNode);
-        _subNode.parentId = _node.id;
-        _subNode.ancestorIds = [..._node.ancestorIds, _node.id];
-        return _subNode;
+      final validSubNodes =
+          subNodes.whereType<Map<String, dynamic>>().map((e) {
+        final subNode = Map.of(e);
+        subNode.parentId = node.id;
+        subNode.ancestorIds = [...node.ancestorIds, node.id];
+        return subNode;
       }).toList();
       // Add sub-nodes IDs to node to create parent-to-child relationship
-      _node.childIds = _subNodes.map(nodeIdGenerator).toList();
+      node.childIds = validSubNodes.map(nodeIdGenerator).toList();
       // Process sub-nodes recursively
       final flatSubNodes = jsonFlattenTreeList(
-        _subNodes,
+        validSubNodes,
         subNodesEntryKey,
         nodeIdGenerator,
       );
