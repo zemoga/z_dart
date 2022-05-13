@@ -103,6 +103,14 @@ class CollectionCache<T> extends Cache<Map<String, T>> {
 
   @Deprecated("Use default constructor instead")
   CollectionCache.from(Map<String, T> data) : this(initialData: data);
+
+  static CollectionCache<Ti> identifiable<Ti extends Identifiable>({
+    Iterable<Ti> identifiableList = const [],
+  }) {
+    return CollectionCache(
+      initialData: identifiableList.associateBy((e) => e.id.toString()),
+    );
+  }
 }
 
 ///
@@ -130,6 +138,7 @@ extension IdentifiableCollectionCacheExt<T extends Identifiable>
 }
 
 ///
+@Deprecated("Use 'CollectionCache.identifiable' instead")
 class IdentifiableCollectionCache<T extends Identifiable>
     extends CollectionCache<T> {
   IdentifiableCollectionCache({
