@@ -46,7 +46,7 @@ class Cache<T> {
 }
 
 ///
-mixin CollectionCacheMixin<T> on Cache<Map<String, T>> {
+extension CollectionCacheExt<T> on Cache<Map<String, T>> {
   Stream<List<T>> get values => stream.map((event) => event.values.toList());
 
   Stream<List<T>> valuesWhere(
@@ -96,8 +96,7 @@ mixin CollectionCacheMixin<T> on Cache<Map<String, T>> {
 }
 
 ///
-class CollectionCache<T> extends Cache<Map<String, T>>
-    with CollectionCacheMixin<T> {
+class CollectionCache<T> extends Cache<Map<String, T>> {
   CollectionCache({
     Map<String, T> initialData = const {},
   }) : super(Map.of(initialData));
@@ -107,8 +106,8 @@ class CollectionCache<T> extends Cache<Map<String, T>>
 }
 
 ///
-mixin IdentifiableCollectionCacheMixin<T extends Identifiable>
-    implements CollectionCacheMixin<T> {
+extension IdentifiableCollectionCacheExt<T extends Identifiable>
+    on Cache<Map<String, T>> {
   Future<bool> containsObject(T object) {
     return contains(object.id.toString());
   }
@@ -132,7 +131,7 @@ mixin IdentifiableCollectionCacheMixin<T extends Identifiable>
 
 ///
 class IdentifiableCollectionCache<T extends Identifiable>
-    extends CollectionCache<T> with IdentifiableCollectionCacheMixin<T> {
+    extends CollectionCache<T> {
   IdentifiableCollectionCache({
     Map<String, T> initialData = const {},
   }) : super(initialData: initialData);
