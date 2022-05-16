@@ -27,7 +27,7 @@ class Cache<T> {
 class CollectionCache<T> extends Cache<Map<String, T>> {
   CollectionCache({
     Map<String, T> initialData = const {},
-  }) : super(Map.of(initialData));
+  }) : super(initialData);
 
   static CollectionCache<Ti> identifiable<Ti extends Identifiable>({
     Iterable<Ti> identifiableList = const [],
@@ -64,25 +64,23 @@ extension CollectionCacheExt<T> on Cache<Map<String, T>> {
   }
 
   void add(String key, T value) {
-    data = data..[key] = value;
+    data = Map.of(data)..[key] = value;
   }
 
   void addAll(Map<String, T> other) {
-    data = data..addAll(other);
+    data = Map.of(data)..addAll(other);
   }
 
   void replaceAll(Map<String, T> other) {
-    data = data
-      ..clear()
-      ..addAll(other);
+    data = Map.of(other);
   }
 
   void remove(String key) {
-    data = data..remove(key);
+    data = Map.of(data)..remove(key);
   }
 
   void clear() {
-    data = data..clear();
+    data = Map.of(data)..clear();
   }
 }
 
