@@ -37,9 +37,7 @@ class CollectionCache<T> extends Cache<Map<String, T>> {
   static CollectionCache<Ti> identifiable<Ti extends Identifiable>({
     Iterable<Ti> identifiableList = const [],
   }) {
-    return CollectionCache(
-      initialData: identifiableList.associateBy((e) => e.id.toString()),
-    );
+    return CollectionCache()..addAllObjects(identifiableList);
   }
 }
 
@@ -117,11 +115,11 @@ extension IdentifiableCollectionCacheExt<T extends Identifiable>
     return add(other.id.toString(), other);
   }
 
-  Future<void> addAllObjects(List<T> others) {
+  Future<void> addAllObjects(Iterable<T> others) {
     return addAll(others.associateBy((e) => e.id.toString()));
   }
 
-  Future<void> replaceAllObjects(List<T> others) {
+  Future<void> replaceAllObjects(Iterable<T> others) {
     return replaceAll(others.associateBy((e) => e.id.toString()));
   }
 
