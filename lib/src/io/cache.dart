@@ -46,6 +46,37 @@ class Cache<T> {
 }
 
 ///
+class CollectionCache<T> extends Cache<Map<String, T>> {
+  CollectionCache({
+    Map<String, T> initialData = const {},
+  }) : super(Map.of(initialData));
+
+  @Deprecated("Use default constructor instead")
+  CollectionCache.from(Map<String, T> data) : this(initialData: data);
+
+  static CollectionCache<Ti> identifiable<Ti extends Identifiable>({
+    Iterable<Ti> identifiableList = const [],
+  }) {
+    return CollectionCache(
+      initialData: identifiableList.associateBy((e) => e.id.toString()),
+    );
+  }
+}
+
+///
+@Deprecated("Use 'CollectionCache.identifiable' instead")
+class IdentifiableCollectionCache<T extends Identifiable>
+    extends CollectionCache<T> {
+  IdentifiableCollectionCache({
+    Map<String, T> initialData = const {},
+  }) : super(initialData: initialData);
+
+  IdentifiableCollectionCache.from(
+    Iterable<T> identifiableList,
+  ) : super(initialData: identifiableList.associateBy((e) => e.id.toString()));
+}
+
+///
 extension CollectionCacheExt<T> on Cache<Map<String, T>> {
   Stream<List<T>> get values => stream.map((event) => event.values.toList());
 
@@ -96,24 +127,6 @@ extension CollectionCacheExt<T> on Cache<Map<String, T>> {
 }
 
 ///
-class CollectionCache<T> extends Cache<Map<String, T>> {
-  CollectionCache({
-    Map<String, T> initialData = const {},
-  }) : super(Map.of(initialData));
-
-  @Deprecated("Use default constructor instead")
-  CollectionCache.from(Map<String, T> data) : this(initialData: data);
-
-  static CollectionCache<Ti> identifiable<Ti extends Identifiable>({
-    Iterable<Ti> identifiableList = const [],
-  }) {
-    return CollectionCache(
-      initialData: identifiableList.associateBy((e) => e.id.toString()),
-    );
-  }
-}
-
-///
 extension IdentifiableCollectionCacheExt<T extends Identifiable>
     on Cache<Map<String, T>> {
   Future<bool> containsObject(T object) {
@@ -135,17 +148,4 @@ extension IdentifiableCollectionCacheExt<T extends Identifiable>
   Future<void> removeObject(T other) {
     return remove(other.id.toString());
   }
-}
-
-///
-@Deprecated("Use 'CollectionCache.identifiable' instead")
-class IdentifiableCollectionCache<T extends Identifiable>
-    extends CollectionCache<T> {
-  IdentifiableCollectionCache({
-    Map<String, T> initialData = const {},
-  }) : super(initialData: initialData);
-
-  IdentifiableCollectionCache.from(
-    Iterable<T> identifiableList,
-  ) : super(initialData: identifiableList.associateBy((e) => e.id.toString()));
 }
