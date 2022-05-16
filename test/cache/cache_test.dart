@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:z_dart/io.dart';
+import 'package:z_dart/cache.dart';
 
 void main() {
   group('Empty CollectionCache', () {

@@ -12,6 +12,5 @@ export 'dart:io';
 
 export 'package:http/http.dart';
 
-part 'src/io/cache.dart';
 part 'src/io/http.dart';
 part 'src/io/legacy_cache.dart';
