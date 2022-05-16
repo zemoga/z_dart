@@ -34,9 +34,6 @@ class CollectionCache<T> extends Cache<Map<String, T>> {
     Map<String, T> initialData = const {},
   }) : super(Map.of(initialData));
 
-  @Deprecated("Use default constructor instead")
-  CollectionCache.from(Map<String, T> data) : this(initialData: data);
-
   static CollectionCache<Ti> identifiable<Ti extends Identifiable>({
     Iterable<Ti> identifiableList = const [],
   }) {
