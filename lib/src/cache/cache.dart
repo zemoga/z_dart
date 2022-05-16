@@ -59,55 +59,53 @@ extension CollectionCacheExt<T> on Cache<Map<String, T>> {
     return valueOrNull(key).map((event) => event ?? orElse());
   }
 
-  Future<bool> contains(String key) {
-    return Future(() => data.containsKey(key));
+  bool contains(String key) {
+    return data.containsKey(key);
   }
 
-  Future<void> add(String key, T value) {
-    return Future(() => data..[key] = value).then(emit);
+  void add(String key, T value) {
+    data = data..[key] = value;
   }
 
-  Future<void> addAll(Map<String, T> other) {
-    return Future(() => data..addAll(other)).then(emit);
+  void addAll(Map<String, T> other) {
+    data = data..addAll(other);
   }
 
-  Future<void> replaceAll(Map<String, T> other) {
-    return Future(
-      () => data
-        ..clear()
-        ..addAll(other),
-    ).then(emit);
+  void replaceAll(Map<String, T> other) {
+    data = data
+      ..clear()
+      ..addAll(other);
   }
 
-  Future<void> remove(String key) {
-    return Future(() => data..remove(key)).then(emit);
+  void remove(String key) {
+    data = data..remove(key);
   }
 
-  Future<void> clear() {
-    return Future(() => data..clear()).then(emit);
+  void clear() {
+    data = data..clear();
   }
 }
 
 ///
 extension IdentifiableCollectionCacheExt<T extends Identifiable>
     on Cache<Map<String, T>> {
-  Future<bool> containsObject(T object) {
+  bool containsObject(T object) {
     return contains(object.id.toString());
   }
 
-  Future<void> addObject(T other) {
+  void addObject(T other) {
     return add(other.id.toString(), other);
   }
 
-  Future<void> addAllObjects(Iterable<T> others) {
+  void addAllObjects(Iterable<T> others) {
     return addAll(others.associateBy((e) => e.id.toString()));
   }
 
-  Future<void> replaceAllObjects(Iterable<T> others) {
+  void replaceAllObjects(Iterable<T> others) {
     return replaceAll(others.associateBy((e) => e.id.toString()));
   }
 
-  Future<void> removeObject(T other) {
+  void removeObject(T other) {
     return remove(other.id.toString());
   }
 }

@@ -34,7 +34,7 @@ void main() {
       final key = 'key';
       final value = 45;
 
-      await collectionCache.add(key, value);
+      collectionCache.add(key, value);
 
       final cacheValues = await collectionCache.values.first;
       expect(cacheValues, isNotEmpty);
@@ -43,7 +43,7 @@ void main() {
     test('.addAll() adds a data map to cache', () async {
       final other = {'keyA': 25, 'keyB': 50, 'keyC': 75, 'keyD': 100};
 
-      await collectionCache.addAll(other);
+      collectionCache.addAll(other);
 
       final cacheValues = await collectionCache.values.first;
       expect(cacheValues, isNotEmpty);
@@ -53,7 +53,7 @@ void main() {
     test('.replaceAll() replaces all cache data with a new data map', () async {
       final oldData = {'key': 0};
 
-      await collectionCache.addAll(oldData);
+      collectionCache.addAll(oldData);
 
       final oldCacheValues = await collectionCache.values.first;
       expect(oldCacheValues, isNotEmpty);
@@ -62,7 +62,7 @@ void main() {
 
       final newData = {'keyA': 25, 'keyB': 50, 'keyC': 75, 'keyD': 100};
 
-      await collectionCache.replaceAll(newData);
+      collectionCache.replaceAll(newData);
 
       final cacheValues = await collectionCache.values.first;
       expect(cacheValues, isNotEmpty);
@@ -83,7 +83,7 @@ void main() {
       final key = 'key';
       final value = 30;
 
-      await collectionCache.add(key, value);
+      collectionCache.add(key, value);
 
       final cacheValues = await collectionCache.values.first;
       expect(cacheValues, isNotEmpty);
@@ -93,8 +93,8 @@ void main() {
     test('.remove() removes a value from cache', () async {
       final other = {'keyA': 25, 'keyB': 50, 'keyC': 75, 'keyD': 100};
 
-      await collectionCache.addAll(other);
-      await collectionCache.remove('keyB');
+      collectionCache.addAll(other);
+      collectionCache.remove('keyB');
 
       final cacheData = await collectionCache.stream.first;
       expect(cacheData, isNotEmpty);
@@ -102,7 +102,7 @@ void main() {
       expect(cacheData.containsKey('keyB'), isFalse);
     });
     test('.clear() clears the cache', () async {
-      await collectionCache.clear();
+      collectionCache.clear();
 
       final cacheValues = await collectionCache.values.first;
       expect(cacheValues, isEmpty);
@@ -121,7 +121,7 @@ void main() {
       final key = 'key';
       final value = 30;
 
-      await collectionCache.add(key, value);
+      collectionCache.add(key, value);
 
       final cacheValues = await collectionCache.values.first;
       expect(cacheValues, isNotEmpty);
