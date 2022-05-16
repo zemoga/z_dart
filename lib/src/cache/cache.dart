@@ -42,19 +42,6 @@ class CollectionCache<T> extends Cache<Map<String, T>> {
 }
 
 ///
-@Deprecated("Use 'CollectionCache.identifiable' instead")
-class IdentifiableCollectionCache<T extends Identifiable>
-    extends CollectionCache<T> {
-  IdentifiableCollectionCache({
-    Map<String, T> initialData = const {},
-  }) : super(initialData: initialData);
-
-  IdentifiableCollectionCache.from(
-    Iterable<T> identifiableList,
-  ) : super(initialData: identifiableList.associateBy((e) => e.id.toString()));
-}
-
-///
 extension CollectionCacheExt<T> on Cache<Map<String, T>> {
   Stream<List<T>> get values => stream.map((event) => event.values.toList());
 
