@@ -3,29 +3,24 @@ part of z.dart.cache;
 ///
 class Cache<T> {
   Cache(T initialData) {
-    emit(initialData);
+    data = initialData;
   }
 
-  // This Subject is intended to be broadcasting while
-  // the app is active so new events are propagated in a reactive way
-  //
-  // This analyzer warning is safe to ignore.
-  // ignore: close_sinks
-  final Subject<T> _subject = BehaviorSubject<T>();
-
-  late T _data;
-
-  /// The current [data].
-  T get data => _data;
+  final _subject = BehaviorSubject<T>();
 
   /// The current stream of [data] elements.
   Stream<T> get stream => _subject.stream;
 
-  /// Updates the [data] to the provided [data].
-  void emit(T data) {
-    _data = data;
-    _subject.add(data);
-  }
+  /// The current [data].
+  T get data => _subject.value;
+
+  /// Updates the [data] to a new value.
+  set data(T data) => _subject.add(data);
+
+  /// Closes the instance.
+  /// This method should be called when the instance is no longer needed.
+  /// Once [close] is called, the instance can no longer be used.
+  void close() => _subject.close();
 }
 
 ///
@@ -43,6 +38,8 @@ class CollectionCache<T> extends Cache<Map<String, T>> {
 
 ///
 extension CollectionCacheExt<T> on Cache<Map<String, T>> {
+  void emit(Map<String, T> data) => this.data = data;
+
   Stream<List<T>> get values => stream.map((event) => event.values.toList());
 
   Stream<List<T>> valuesWhere(

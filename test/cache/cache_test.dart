@@ -2,13 +2,33 @@ import 'package:test/test.dart';
 import 'package:z_dart/cache.dart';
 
 void main() {
+  group('Cache', () {
+    final initialData = 100;
+    late Cache cache;
+    setUp(() {
+      cache = Cache(initialData);
+    });
+    tearDown(() {
+      cache.close();
+    });
+    test('.emit() initial value', () {
+      expect(cache.data, initialData);
+    });
+    test('.emit() emits a new value', () {
+      final value = 50;
+
+      cache.data = value;
+
+      expect(cache.data, value);
+    });
+  });
   group('Empty CollectionCache', () {
     late CollectionCache collectionCache;
     setUp(() {
       collectionCache = CollectionCache();
     });
     tearDown(() {
-      collectionCache.clear();
+      collectionCache.close();
     });
     test('.add() adds a data entry to cache', () async {
       final key = 'key';
@@ -69,6 +89,23 @@ void main() {
       expect(cacheValues, isNotEmpty);
       expect(cacheValues, hasLength(2));
       expect(cacheValues[1], equals(value));
+    });
+    test('.remove() removes a value from cache', () async {
+      final other = {'keyA': 25, 'keyB': 50, 'keyC': 75, 'keyD': 100};
+
+      await collectionCache.addAll(other);
+      await collectionCache.remove('keyB');
+
+      final cacheData = await collectionCache.stream.first;
+      expect(cacheData, isNotEmpty);
+      expect(cacheData, hasLength(4));
+      expect(cacheData.containsKey('keyB'), isFalse);
+    });
+    test('.clear() clears the cache', () async {
+      await collectionCache.clear();
+
+      final cacheValues = await collectionCache.values.first;
+      expect(cacheValues, isEmpty);
     });
   });
   group('Prepopulated CollectionCache with immutable data', () {
