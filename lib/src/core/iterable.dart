@@ -1,6 +1,62 @@
 part of z.dart.core;
 
 extension IterableExt<E> on Iterable<E> {
+  Either<dynamic, E> get firstEither {
+    return catching(() => first);
+  }
+
+  Option<E> get firstOption {
+    return firstEither.toOption();
+  }
+
+  Either<dynamic, E> get lastEither {
+    return catching(() => last);
+  }
+
+  Option<E> get lastOption {
+    return lastEither.toOption();
+  }
+
+  Either<dynamic, E> get singleEither {
+    return catching(() => single);
+  }
+
+  Option<E> get singleOption {
+    return singleEither.toOption();
+  }
+
+  Either<dynamic, E> firstWhereEither(bool Function(E element) test) {
+    return catching(() => firstWhere(test));
+  }
+
+  Option<E> firstWhereOption(bool Function(E element) test) {
+    return firstWhereEither(test).toOption();
+  }
+
+  Either<dynamic, E> lastWhereEither(bool Function(E element) test) {
+    return catching(() => lastWhere(test));
+  }
+
+  Option<E> lastWhereOption(bool Function(E element) test) {
+    return lastWhereEither(test).toOption();
+  }
+
+  Either<dynamic, E> singleWhereEither(bool Function(E element) test) {
+    return catching(() => singleWhere(test));
+  }
+
+  Option<E> singleWhereOption(bool Function(E element) test) {
+    return singleWhereEither(test).toOption();
+  }
+
+  Either<dynamic, E> elementAtEither(int index) {
+    return catching(() => elementAt(index));
+  }
+
+  Option<E> elementAtOption(int index) {
+    return elementAtEither(index).toOption();
+  }
+
   bool containsEvery(Iterable<E>? other) {
     if (other == null) return false;
 

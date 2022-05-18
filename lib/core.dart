@@ -1,5 +1,7 @@
 library z.dart.core;
 
+import 'package:dartz/dartz.dart' show Either, Option, catching;
+
 export 'dart:core';
 
 export 'package:dartz/dartz.dart' hide State, StateMonad, StateT, StateTMonad;
