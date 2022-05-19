@@ -24,6 +24,7 @@ class Cache<T> {
 }
 
 ///
+@Deprecated('Use Cache instead. This will be removed in a future version')
 class CollectionCache<T> extends Cache<Map<String, T>> {
   CollectionCache({
     Map<String, T> initialData = const {},
@@ -37,72 +38,95 @@ class CollectionCache<T> extends Cache<Map<String, T>> {
 }
 
 ///
-extension CollectionCacheExt<T> on Cache<Map<String, T>> {
-  void emit(Map<String, T> data) => this.data = data;
+extension ListCacheExt<T> on Cache<List<T>> {
+  void mutateList(void Function(List<T> data) block) {
+    data = data.toList().also(block);
+  }
+}
 
-  Stream<List<T>> get values => stream.map((event) => event.values.toList());
+///
+extension MapCacheExt<K, V> on Cache<Map<K, V>> {
+  Stream<List<V>> get values => stream.map((event) => event.values.toList());
 
-  Stream<List<T>> valuesWhere(
-    bool Function(T value) test,
+  Stream<List<V>> valuesWhere(
+    bool Function(V value) test,
   ) {
     return values.map((event) => event.where(test).toList());
   }
 
-  Stream<T?> valueOrNull(String key) {
+  Stream<V?> valueOrNull(String key) {
     return stream.map((event) => event[key]);
   }
 
-  Stream<T> valueOrElse(
+  Stream<V> valueOrElse(
     String key, {
-    required T Function() orElse,
+    required V Function() orElse,
   }) {
     return valueOrNull(key).map((event) => event ?? orElse());
   }
 
+  void mutateMap(void Function(Map<K, V> data) block) {
+    data = Map.of(data).also(block);
+  }
+}
+
+///
+extension CollectionCacheExt<T> on Cache<Map<String, T>> {
+  @Deprecated('Use data directly. This will be removed in a future version')
   bool contains(String key) {
     return data.containsKey(key);
   }
 
+  @Deprecated('Use mutateMap instead. This will be removed in a future version')
   void add(String key, T value) {
-    data = Map.of(data)..[key] = value;
+    mutateMap((data) => data[key] = value);
   }
 
+  @Deprecated('Use mutateMap instead. This will be removed in a future version')
   void addAll(Map<String, T> other) {
-    data = Map.of(data)..addAll(other);
+    mutateMap((data) => data.addAll(other));
   }
 
+  @Deprecated('Use mutateMap instead. This will be removed in a future version')
   void replaceAll(Map<String, T> other) {
     data = Map.of(other);
   }
 
+  @Deprecated('Use mutateMap instead. This will be removed in a future version')
   void remove(String key) {
-    data = Map.of(data)..remove(key);
+    mutateMap((data) => data.remove(key));
   }
 
+  @Deprecated('Use mutateMap instead. This will be removed in a future version')
   void clear() {
-    data = Map.of(data)..clear();
+    data = {};
   }
 }
 
 ///
 extension IdentifiableCollectionCacheExt<T extends Identifiable>
     on Cache<Map<String, T>> {
+  @Deprecated('Use data directly. This will be removed in a future version')
   bool containsObject(T object) {
     return contains(object.id.toString());
   }
 
+  @Deprecated('Use mutateMap instead. This will be removed in a future version')
   void addObject(T other) {
     return add(other.id.toString(), other);
   }
 
+  @Deprecated('Use mutateMap instead. This will be removed in a future version')
   void addAllObjects(Iterable<T> others) {
     return addAll(others.associateBy((e) => e.id.toString()));
   }
 
+  @Deprecated('Use mutateMap instead. This will be removed in a future version')
   void replaceAllObjects(Iterable<T> others) {
     return replaceAll(others.associateBy((e) => e.id.toString()));
   }
 
+  @Deprecated('Use mutateMap instead. This will be removed in a future version')
   void removeObject(T other) {
     return remove(other.id.toString());
   }
