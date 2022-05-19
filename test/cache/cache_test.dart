@@ -1,6 +1,8 @@
 import 'package:test/test.dart';
 import 'package:z_dart/cache.dart';
 
+typedef CollectionCache<T> = Cache<Map<String, T>>;
+
 void main() {
   group('Cache', () {
     final initialData = 100;
@@ -25,7 +27,7 @@ void main() {
   group('Empty CollectionCache', () {
     late CollectionCache collectionCache;
     setUp(() {
-      collectionCache = CollectionCache();
+      collectionCache = CollectionCache({});
     });
     tearDown(() {
       collectionCache.close();
@@ -71,10 +73,10 @@ void main() {
     });
   });
   group('Prepopulated CollectionCache', () {
-    late CollectionCache collectionCache;
+    late CollectionCache<int> collectionCache;
     setUp(() {
       final data = {'dftlKey': 100};
-      collectionCache = CollectionCache(initialData: data);
+      collectionCache = CollectionCache(data);
     });
     tearDown(() {
       collectionCache.clear();
@@ -109,10 +111,10 @@ void main() {
     });
   });
   group('Prepopulated CollectionCache with immutable data', () {
-    late CollectionCache collectionCache;
+    late CollectionCache<int> collectionCache;
     setUp(() {
       final data = Map<String, int>.unmodifiable({'dftlKey': 100});
-      collectionCache = CollectionCache(initialData: data);
+      collectionCache = CollectionCache(data);
     });
     tearDown(() {
       collectionCache.clear();

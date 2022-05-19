@@ -22,20 +22,6 @@ class Cache<T> {
 }
 
 ///
-@Deprecated('Use Cache instead. This will be removed in a future version')
-class CollectionCache<T> extends Cache<Map<String, T>> {
-  CollectionCache({
-    Map<String, T> initialData = const {},
-  }) : super(initialData);
-
-  static CollectionCache<Ti> identifiable<Ti extends Identifiable>({
-    Iterable<Ti> identifiableList = const [],
-  }) {
-    return CollectionCache()..addAllObjects(identifiableList);
-  }
-}
-
-///
 extension ListCacheExt<T> on Cache<List<T>> {
   void mutateList(void Function(List<T> data) block) {
     data = data.toList().also(block);
