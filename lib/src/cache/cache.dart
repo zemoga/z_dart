@@ -2,11 +2,9 @@ part of z.dart.cache;
 
 ///
 class Cache<T> {
-  Cache(T initialData) {
-    data = initialData;
-  }
+  Cache(T initialData) : _subject = BehaviorSubject<T>.seeded(initialData);
 
-  final _subject = BehaviorSubject<T>();
+  final BehaviorSubject<T> _subject;
 
   /// The current stream of [data] elements.
   Stream<T> get stream => _subject.stream;
