@@ -1,6 +1,10 @@
 part of z.dart.core;
 
 extension IterableExt<E> on Iterable<E> {
+  E? get firstOrNull {
+    return isEmpty ? null : first;
+  }
+
   Either<dynamic, E> get firstEither {
     return catching(() => first);
   }
@@ -9,12 +13,20 @@ extension IterableExt<E> on Iterable<E> {
     return firstEither.toOption();
   }
 
+  E? get lastOrNull {
+    return isEmpty ? null : last;
+  }
+
   Either<dynamic, E> get lastEither {
     return catching(() => last);
   }
 
   Option<E> get lastOption {
     return lastEither.toOption();
+  }
+
+  E? get singleOrNull {
+    return length != 1 ? null : single;
   }
 
   Either<dynamic, E> get singleEither {
