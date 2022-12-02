@@ -23,10 +23,12 @@ class Cache<T> {
 
 ///
 extension ListCacheExt<E> on Cache<List<E>> {
+  @Deprecated('Use a map-based Cache instead.')
   Stream<List<E>> valuesWhere(bool Function(E value) test) {
     return stream.map((event) => event.where(test).toList());
   }
 
+  @Deprecated('Use a map-based Cache instead.')
   Stream<E> find(
     bool Function(E value) test, {
     required E Function() orElse,
@@ -34,26 +36,32 @@ extension ListCacheExt<E> on Cache<List<E>> {
     return stream.map((event) => event.firstWhere(test, orElse: orElse));
   }
 
+  @Deprecated('Use a map-based Cache instead.')
   void update(void Function(List<E> data) block) {
     data = data.toList().also(block);
   }
 
+  @Deprecated('Use a map-based Cache instead.')
   void add(E value) {
     update((data) => data.add(value));
   }
 
+  @Deprecated('Use a map-based Cache instead.')
   void addAll(List<E> values) {
     update((data) => data.addAll(values));
   }
 
+  @Deprecated('Use a map-based Cache instead.')
   void replaceAll(List<E> values) {
     data = List.of(values);
   }
 
+  @Deprecated('Use a map-based Cache instead.')
   void removeWhere(bool Function(E value) test) {
     update((data) => data.removeWhere(test));
   }
 
+  @Deprecated('Use a map-based Cache instead.')
   void clear() {
     data = [];
   }
@@ -99,7 +107,7 @@ extension MapCacheExt<K, V> on Cache<Map<K, V>> {
     update((data) => data[key] = value);
   }
 
-  @Deprecated('Use put instead. This will be removed in a future version')
+  @Deprecated('Use put instead.')
   void add(K key, V value) {
     put(key, value);
   }
@@ -108,6 +116,7 @@ extension MapCacheExt<K, V> on Cache<Map<K, V>> {
     update((data) => data.addAll(other));
   }
 
+  @Deprecated('Set the data directly instead.')
   void replaceAll(Map<K, V> other) {
     data = Map.of(other);
   }
