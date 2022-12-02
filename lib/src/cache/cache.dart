@@ -61,16 +61,28 @@ extension ListCacheExt<E> on Cache<List<E>> {
 
 ///
 extension MapCacheExt<K, V> on Cache<Map<K, V>> {
+  Stream<V?> get(K key) => stream.map((event) => event[key]);
+
+  Stream<List<V>> getAll() => stream.map((event) => event.values.toList());
+
+  Stream<List<V>> where(bool Function(MapEntry<K, V> entry) test) {
+    return stream.map((event) => event.where(test).values.toList());
+  }
+
+  @Deprecated('Use getAll() instead.')
   Stream<List<V>> get values => stream.map((event) => event.values.toList());
 
+  @Deprecated('Use where() instead.')
   Stream<List<V>> valuesWhere(bool Function(V value) test) {
     return values.map((event) => event.where(test).toList());
   }
 
+  @Deprecated('Use get(K key) instead.')
   Stream<V?> valueOrNull(K key) {
     return stream.map((event) => event[key]);
   }
 
+  @Deprecated('Use get(K key) instead.')
   Stream<V> valueOrElse(K key, {required V Function() orElse}) {
     return valueOrNull(key).map((event) => event ?? orElse());
   }
@@ -100,7 +112,7 @@ extension MapCacheExt<K, V> on Cache<Map<K, V>> {
     data = Map.of(other);
   }
 
-  void remove(String key) {
+  void remove(K key) {
     update((data) => data.remove(key));
   }
 
