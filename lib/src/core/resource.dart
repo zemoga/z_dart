@@ -24,6 +24,10 @@ abstract class Resource<T> {
     fold(isInitial, isLoading, isData, isError);
   }
 
+  T? getOrNull() {
+    return fold(() => null, () => null, (data) => data, (_) => null);
+  }
+
   T getOrElse(T Function() dflt) {
     return fold(dflt, dflt, (data) => data, (_) => dflt());
   }
