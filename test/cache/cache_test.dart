@@ -36,9 +36,9 @@ void main() {
       final key = 'key';
       final value = 45;
 
-      collectionCache.add(key, value);
+      collectionCache.put(key, value);
 
-      final cacheValues = await collectionCache.values.first;
+      final cacheValues = await collectionCache.getAll().first;
       expect(cacheValues, isNotEmpty);
       expect(cacheValues.first, equals(value));
     });
@@ -47,7 +47,7 @@ void main() {
 
       collectionCache.addAll(other);
 
-      final cacheValues = await collectionCache.values.first;
+      final cacheValues = await collectionCache.getAll().first;
       expect(cacheValues, isNotEmpty);
       expect(cacheValues, hasLength(4));
       expect(cacheValues, equals(other.values));
@@ -57,16 +57,16 @@ void main() {
 
       collectionCache.addAll(oldData);
 
-      final oldCacheValues = await collectionCache.values.first;
+      final oldCacheValues = await collectionCache.getAll().first;
       expect(oldCacheValues, isNotEmpty);
       expect(oldCacheValues, hasLength(1));
       expect(oldCacheValues, equals(oldData.values));
 
       final newData = {'keyA': 25, 'keyB': 50, 'keyC': 75, 'keyD': 100};
 
-      collectionCache.replaceAll(newData);
+      collectionCache.data = newData;
 
-      final cacheValues = await collectionCache.values.first;
+      final cacheValues = await collectionCache.getAll().first;
       expect(cacheValues, isNotEmpty);
       expect(cacheValues, hasLength(4));
       expect(cacheValues, equals(newData.values));
@@ -85,9 +85,9 @@ void main() {
       final key = 'key';
       final value = 30;
 
-      collectionCache.add(key, value);
+      collectionCache.put(key, value);
 
-      final cacheValues = await collectionCache.values.first;
+      final cacheValues = await collectionCache.getAll().first;
       expect(cacheValues, isNotEmpty);
       expect(cacheValues, hasLength(2));
       expect(cacheValues[1], equals(value));
@@ -106,7 +106,7 @@ void main() {
     test('.clear() clears the cache', () async {
       collectionCache.clear();
 
-      final cacheValues = await collectionCache.values.first;
+      final cacheValues = await collectionCache.getAll().first;
       expect(cacheValues, isEmpty);
     });
   });
@@ -123,9 +123,9 @@ void main() {
       final key = 'key';
       final value = 30;
 
-      collectionCache.add(key, value);
+      collectionCache.put(key, value);
 
-      final cacheValues = await collectionCache.values.first;
+      final cacheValues = await collectionCache.getAll().first;
       expect(cacheValues, isNotEmpty);
       expect(cacheValues, hasLength(2));
       expect(cacheValues[1], equals(value));
