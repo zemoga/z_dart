@@ -15,7 +15,7 @@ void main() {
 
       expect(output.isData, isTrue);
       expect(output.getOrNull(), isNotNull);
-      expect(output.getOrNull(), input.data.hashCode);
+      expect(output.getOrNull(), input.value.hashCode);
     });
     test('isError => keepsError', () async {
       final input = AsyncError(FormatException(), StackTrace.current);
@@ -40,7 +40,7 @@ void main() {
       input.when(isData: completer.complete);
 
       expect(completer.isCompleted, isTrue);
-      expect(completer.future, completion(input.data));
+      expect(completer.future, completion(input.value));
     });
     test('isError => invokesErrorCallback', () {
       final input = AsyncError(FormatException(), StackTrace.current);
@@ -64,7 +64,7 @@ void main() {
       final output = input.getOrNull();
 
       expect(output, isNotNull);
-      expect(output, input.data);
+      expect(output, input.value);
     });
     test('isError  => returnsNull', () {
       final input = AsyncError(FormatException(), StackTrace.current);
@@ -89,7 +89,7 @@ void main() {
       final output = input | fallbackData;
 
       expect(output, isNotNull);
-      expect(output, input.data);
+      expect(output, input.value);
     });
     test('isError  => returnsFallbackData', () {
       final fallbackData = 5;

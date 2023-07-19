@@ -118,9 +118,9 @@ class AsyncLoading<T> extends AsyncValue<T> {
 }
 
 class AsyncData<T> extends AsyncValue<T> {
-  const AsyncData(this.data);
+  const AsyncData(this.value);
 
-  final T data;
+  final T value;
 
   @override
   R fold<R>({
@@ -128,7 +128,7 @@ class AsyncData<T> extends AsyncValue<T> {
     required R Function(T data) ifData,
     required R Function(Object error, StackTrace stackTrace) ifError,
   }) {
-    return ifData(data);
+    return ifData(value);
   }
 
   @override
@@ -136,10 +136,10 @@ class AsyncData<T> extends AsyncValue<T> {
       identical(this, other) ||
       other is AsyncData &&
           runtimeType == other.runtimeType &&
-          data == other.data;
+          value == other.value;
 
   @override
-  int get hashCode => data.hashCode;
+  int get hashCode => value.hashCode;
 }
 
 class AsyncError<T> extends AsyncValue<T> {
