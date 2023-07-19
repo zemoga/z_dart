@@ -4,13 +4,13 @@ import 'package:z_dart/async.dart';
 void main() {
   group('map:', () {
     test('isLoading => keepsLoading', () async {
-      final input = AsyncValue<String>.loading();
+      final input = AsyncValue.loading();
       final output = input.map((t) => t.hashCode);
 
       expect(output.isLoading, isTrue);
     });
     test('isData => transformsData', () async {
-      final input = AsyncValueData('A');
+      final input = AsyncData('A');
       final output = input.map((t) => t.hashCode);
 
       expect(output.isData, isTrue);
@@ -18,7 +18,7 @@ void main() {
       expect(output.getOrNull(), input.data.hashCode);
     });
     test('isError => keepsError', () async {
-      final input = AsyncValueError(FormatException(), StackTrace.current);
+      final input = AsyncError(FormatException(), StackTrace.current);
       final output = input.map((t) => t.hashCode);
 
       expect(output.isError, isTrue);
@@ -35,7 +35,7 @@ void main() {
       expect(completer.isCompleted, isTrue);
     });
     test('isData => invokesDataCallback', () {
-      final input = AsyncValueData(10);
+      final input = AsyncData(10);
       final completer = Completer<int>();
       input.when(isData: completer.complete);
 
@@ -43,7 +43,7 @@ void main() {
       expect(completer.future, completion(input.data));
     });
     test('isError => invokesErrorCallback', () {
-      final input = AsyncValueError(FormatException(), StackTrace.current);
+      final input = AsyncError(FormatException(), StackTrace.current);
       final completer = Completer();
       input.when(isError: completer.completeError);
 
@@ -60,14 +60,14 @@ void main() {
       expect(output, isNull);
     });
     test('isData  => returnsData', () {
-      final input = AsyncValueData(10);
+      final input = AsyncData(10);
       final output = input.getOrNull();
 
       expect(output, isNotNull);
       expect(output, input.data);
     });
     test('isError  => returnsNull', () {
-      final input = AsyncValueError(FormatException(), StackTrace.current);
+      final input = AsyncError(FormatException(), StackTrace.current);
       final output = input.getOrNull();
 
       expect(output, isNull);
@@ -85,7 +85,7 @@ void main() {
     });
     test('isData  => returnsData', () {
       final fallbackData = 5;
-      final input = AsyncValueData(10);
+      final input = AsyncData(10);
       final output = input | fallbackData;
 
       expect(output, isNotNull);
@@ -93,7 +93,7 @@ void main() {
     });
     test('isError  => returnsFallbackData', () {
       final fallbackData = 5;
-      final input = AsyncValueError(FormatException(), StackTrace.current);
+      final input = AsyncError(FormatException(), StackTrace.current);
       final output = input | fallbackData;
 
       expect(output, isNotNull);

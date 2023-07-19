@@ -3,58 +3,58 @@ part of z.dart.async;
 sealed class AsyncValue<T> {
   const AsyncValue();
 
-  const factory AsyncValue.loading() = AsyncValueLoading<T>;
+  const factory AsyncValue.loading() = AsyncLoading<T>;
 
-  const factory AsyncValue.data(T t) = AsyncValueData<T>;
+  const factory AsyncValue.data(T t) = AsyncData<T>;
 
   const factory AsyncValue.error(Object error, StackTrace stackTrace) =
-      AsyncValueError<T>;
+      AsyncError<T>;
 
   bool get isLoading {
     return switch (this) {
-      AsyncValueLoading _ => true,
-      AsyncValueData _ => false,
-      AsyncValueError _ => false,
+      AsyncLoading _ => true,
+      AsyncData _ => false,
+      AsyncError _ => false,
     };
   }
 
   bool get isData {
     return switch (this) {
-      AsyncValueLoading _ => false,
-      AsyncValueData _ => true,
-      AsyncValueError _ => false,
+      AsyncLoading _ => false,
+      AsyncData _ => true,
+      AsyncError _ => false,
     };
   }
 
   bool get isError {
     return switch (this) {
-      AsyncValueLoading _ => false,
-      AsyncValueData _ => false,
-      AsyncValueError _ => true,
+      AsyncLoading _ => false,
+      AsyncData _ => false,
+      AsyncError _ => true,
     };
   }
 
   bool isErrorOfType<E extends Exception>() {
     return switch (this) {
-      AsyncValueLoading _ => false,
-      AsyncValueData _ => false,
-      AsyncValueError e => e.error is E,
+      AsyncLoading _ => false,
+      AsyncData _ => false,
+      AsyncError e => e.error is E,
     };
   }
 
   T? getOrNull() {
     return switch (this) {
-      AsyncValueLoading _ => null,
-      AsyncValueData d => d.data,
-      AsyncValueError _ => null,
+      AsyncLoading _ => null,
+      AsyncData d => d.data,
+      AsyncError _ => null,
     };
   }
 
   T getOrElse(T Function() dflt) {
     return switch (this) {
-      AsyncValueLoading _ => dflt(),
-      AsyncValueData d => d.data,
-      AsyncValueError _ => dflt(),
+      AsyncLoading _ => dflt(),
+      AsyncData d => d.data,
+      AsyncError _ => dflt(),
     };
   }
 
@@ -62,9 +62,9 @@ sealed class AsyncValue<T> {
 
   AsyncValue<R> map<R>(R Function(T t) mapper) {
     return switch (this) {
-      AsyncValueLoading _ => AsyncValue.loading(),
-      AsyncValueData d => AsyncValue.data(mapper(d.data)),
-      AsyncValueError e => AsyncValue.error(e.error, e.stackTrace),
+      AsyncLoading _ => AsyncValue.loading(),
+      AsyncData d => AsyncValue.data(mapper(d.data)),
+      AsyncError e => AsyncValue.error(e.error, e.stackTrace),
     };
   }
 
@@ -74,43 +74,43 @@ sealed class AsyncValue<T> {
     void Function(Object error, StackTrace stackTrace)? isError,
   }) {
     return switch (this) {
-      AsyncValueLoading _ => (isLoading ?? () {}).call(),
-      AsyncValueData d => (isData ?? (d) {}).call(d.data),
-      AsyncValueError e => (isError ?? (e, st) {}).call(e.error, e.stackTrace),
+      AsyncLoading _ => (isLoading ?? () {}).call(),
+      AsyncData d => (isData ?? (d) {}).call(d.data),
+      AsyncError e => (isError ?? (e, st) {}).call(e.error, e.stackTrace),
     };
   }
 
   @override
   String toString() {
     return switch (this) {
-      AsyncValueLoading _ => 'Loading',
-      AsyncValueData d => 'Data(${d.data})',
-      AsyncValueError e => 'Error(${e.error}, ${e.stackTrace})',
+      AsyncLoading _ => 'Loading',
+      AsyncData d => 'Data(${d.data})',
+      AsyncError e => 'Error(${e.error}, ${e.stackTrace})',
     };
   }
 }
 
-class AsyncValueLoading<T> extends AsyncValue<T> {
-  const AsyncValueLoading();
+class AsyncLoading<T> extends AsyncValue<T> {
+  const AsyncLoading();
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AsyncValueLoading && runtimeType == other.runtimeType;
+      other is AsyncLoading && runtimeType == other.runtimeType;
 
   @override
   int get hashCode => 0;
 }
 
-class AsyncValueData<T> extends AsyncValue<T> {
-  const AsyncValueData(this.data);
+class AsyncData<T> extends AsyncValue<T> {
+  const AsyncData(this.data);
 
   final T data;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AsyncValueData &&
+      other is AsyncData &&
           runtimeType == other.runtimeType &&
           data == other.data;
 
@@ -118,8 +118,8 @@ class AsyncValueData<T> extends AsyncValue<T> {
   int get hashCode => data.hashCode;
 }
 
-class AsyncValueError<T> extends AsyncValue<T> {
-  const AsyncValueError(this.error, this.stackTrace);
+class AsyncError<T> extends AsyncValue<T> {
+  const AsyncError(this.error, this.stackTrace);
 
   final Object error;
   final StackTrace stackTrace;
@@ -127,7 +127,7 @@ class AsyncValueError<T> extends AsyncValue<T> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AsyncValueError &&
+      other is AsyncError &&
           runtimeType == other.runtimeType &&
           error == other.error &&
           stackTrace == other.stackTrace;
