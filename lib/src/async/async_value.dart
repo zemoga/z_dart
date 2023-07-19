@@ -10,62 +10,68 @@ sealed class AsyncValue<T> {
   const factory AsyncValue.error(Object error, StackTrace stackTrace) =
       AsyncError<T>;
 
+  R fold<R>({
+    required R Function() ifLoading,
+    required R Function(T data) ifData,
+    required R Function(Object error, StackTrace stackTrace) ifError,
+  });
+
   bool get isLoading {
-    return switch (this) {
-      AsyncLoading _ => true,
-      AsyncData _ => false,
-      AsyncError _ => false,
-    };
+    return fold(
+      ifLoading: () => true,
+      ifData: (_) => false,
+      ifError: (e, st) => false,
+    );
   }
 
   bool get isData {
-    return switch (this) {
-      AsyncLoading _ => false,
-      AsyncData _ => true,
-      AsyncError _ => false,
-    };
+    return fold(
+      ifLoading: () => false,
+      ifData: (_) => true,
+      ifError: (e, st) => false,
+    );
   }
 
   bool get isError {
-    return switch (this) {
-      AsyncLoading _ => false,
-      AsyncData _ => false,
-      AsyncError _ => true,
-    };
+    return fold(
+      ifLoading: () => false,
+      ifData: (_) => false,
+      ifError: (e, st) => true,
+    );
   }
 
   bool isErrorOfType<E extends Exception>() {
-    return switch (this) {
-      AsyncLoading _ => false,
-      AsyncData _ => false,
-      AsyncError e => e.error is E,
-    };
+    return fold(
+      ifLoading: () => false,
+      ifData: (_) => false,
+      ifError: (e, st) => e is E,
+    );
   }
 
   T? getOrNull() {
-    return switch (this) {
-      AsyncLoading _ => null,
-      AsyncData d => d.data,
-      AsyncError _ => null,
-    };
+    return fold(
+      ifLoading: () => null,
+      ifData: (data) => data,
+      ifError: (e, st) => null,
+    );
   }
 
   T getOrElse(T Function() dflt) {
-    return switch (this) {
-      AsyncLoading _ => dflt(),
-      AsyncData d => d.data,
-      AsyncError _ => dflt(),
-    };
+    return fold(
+      ifLoading: dflt,
+      ifData: (data) => data,
+      ifError: (e, st) => dflt(),
+    );
   }
 
   T operator |(T dflt) => getOrElse(() => dflt);
 
   AsyncValue<R> map<R>(R Function(T t) mapper) {
-    return switch (this) {
-      AsyncLoading _ => AsyncValue.loading(),
-      AsyncData d => AsyncValue.data(mapper(d.data)),
-      AsyncError e => AsyncValue.error(e.error, e.stackTrace),
-    };
+    return fold(
+      ifLoading: AsyncValue.loading,
+      ifData: (t) => AsyncValue.data(mapper(t)),
+      ifError: AsyncValue.error,
+    );
   }
 
   void when({
@@ -73,25 +79,34 @@ sealed class AsyncValue<T> {
     void Function(T data)? isData,
     void Function(Object error, StackTrace stackTrace)? isError,
   }) {
-    return switch (this) {
-      AsyncLoading _ => (isLoading ?? () {}).call(),
-      AsyncData d => (isData ?? (d) {}).call(d.data),
-      AsyncError e => (isError ?? (e, st) {}).call(e.error, e.stackTrace),
-    };
+    fold(
+      ifLoading: isLoading ?? () {},
+      ifData: isData ?? (d) {},
+      ifError: isError ?? (e, st) {},
+    );
   }
 
   @override
   String toString() {
-    return switch (this) {
-      AsyncLoading _ => 'Loading',
-      AsyncData d => 'Data(${d.data})',
-      AsyncError e => 'Error(${e.error}, ${e.stackTrace})',
-    };
+    return fold(
+      ifLoading: () => 'Loading',
+      ifData: (data) => 'Data($data)',
+      ifError: (e, st) => 'Error($e, $st)',
+    );
   }
 }
 
 class AsyncLoading<T> extends AsyncValue<T> {
   const AsyncLoading();
+
+  @override
+  R fold<R>({
+    required R Function() ifLoading,
+    required R Function(T data) ifData,
+    required R Function(Object error, StackTrace stackTrace) ifError,
+  }) {
+    return ifLoading();
+  }
 
   @override
   bool operator ==(Object other) =>
@@ -106,6 +121,15 @@ class AsyncData<T> extends AsyncValue<T> {
   const AsyncData(this.data);
 
   final T data;
+
+  @override
+  R fold<R>({
+    required R Function() ifLoading,
+    required R Function(T data) ifData,
+    required R Function(Object error, StackTrace stackTrace) ifError,
+  }) {
+    return ifData(data);
+  }
 
   @override
   bool operator ==(Object other) =>
@@ -123,6 +147,15 @@ class AsyncError<T> extends AsyncValue<T> {
 
   final Object error;
   final StackTrace stackTrace;
+
+  @override
+  R fold<R>({
+    required R Function() ifLoading,
+    required R Function(T data) ifData,
+    required R Function(Object error, StackTrace stackTrace) ifError,
+  }) {
+    return ifError(error, stackTrace);
+  }
 
   @override
   bool operator ==(Object other) =>
