@@ -1,7 +1,7 @@
 part of z.dart.cache;
 
 ///
-class CachePolicy {
+final class CachePolicy {
   final Duration expireAfter;
   late DateTime _validationTime;
 

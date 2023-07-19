@@ -1,7 +1,7 @@
 part of z.dart.cache;
 
 ///
-class Cache<T> {
+final class Cache<T> {
   Cache(T initialData) : _subject = BehaviorSubject<T>.seeded(initialData);
 
   final BehaviorSubject<T> _subject;
