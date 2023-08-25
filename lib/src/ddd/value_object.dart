@@ -1,10 +1,10 @@
 part of z.dart.ddd;
 
 ///
-abstract class ValueObject {}
+base class ValueObject {}
 
 ///
-abstract class SingleValueObject<T extends Object> implements ValueObject {
+base class SingleValueObject<T extends Object> implements ValueObject {
   const SingleValueObject(this.value);
 
   final T value;

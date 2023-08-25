@@ -1,6 +1,6 @@
 part of z.dart.ddd;
 
-abstract class EntityId extends SingleValueObject<String>
+base class EntityId extends SingleValueObject<String>
     implements Comparable<EntityId> {
   const EntityId(String value) : super(value);
 
@@ -28,7 +28,7 @@ abstract class EntityId extends SingleValueObject<String>
 }
 
 ///
-abstract class Entity<T extends ValueObject> implements Identifiable<T> {
+base class Entity<T extends ValueObject> implements Identifiable<T> {
   const Entity(this.id);
 
   @override
