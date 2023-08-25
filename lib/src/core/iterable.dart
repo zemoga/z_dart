@@ -5,12 +5,36 @@ extension IterableExt<E> on Iterable<E> {
     return isEmpty ? null : first;
   }
 
+  E? firstWhereOrNull(bool Function(E element) test) {
+    try {
+      return firstWhere(test);
+    } catch (e) {
+      return null;
+    }
+  }
+
   E? get lastOrNull {
     return isEmpty ? null : last;
   }
 
+  E? lastWhereOrNull(bool Function(E element) test) {
+    try {
+      return lastWhere(test);
+    } catch (e) {
+      return null;
+    }
+  }
+
   E? get singleOrNull {
     return length != 1 ? null : single;
+  }
+
+  E? singleWhereOrNull(bool Function(E element) test) {
+    try {
+      return singleWhere(test);
+    } catch (e) {
+      return null;
+    }
   }
 
   bool containsEvery(Iterable<E>? other) {
