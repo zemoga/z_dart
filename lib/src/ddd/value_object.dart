@@ -1,10 +1,10 @@
 part of z.dart.ddd;
 
-///
+@Deprecated('This will be removed in a future version')
 base class ValueObject {}
 
 ///
-base class SingleValueObject<T extends Object> implements ValueObject {
+base class SingleValueObject<T extends Object> {
   const SingleValueObject(this.value);
 
   final T value;

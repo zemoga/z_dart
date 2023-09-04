@@ -1,5 +1,6 @@
 part of z.dart.ddd;
 
+@Deprecated('Use custom type instead. This will be removed in a future version')
 base class EntityId extends SingleValueObject<String>
     implements Comparable<EntityId> {
   const EntityId(String value) : super(value);
@@ -28,7 +29,7 @@ base class EntityId extends SingleValueObject<String>
 }
 
 ///
-base class Entity<T extends ValueObject> implements Identifiable<T> {
+base class Entity<T> implements Identifiable<T> {
   const Entity(this.id);
 
   @override
