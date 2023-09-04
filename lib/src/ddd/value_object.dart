@@ -3,7 +3,7 @@ part of z.dart.ddd;
 @Deprecated('This will be removed in a future version')
 base class ValueObject {}
 
-///
+@Deprecated('Use Equatable on your custom entity to guarantee ID equality.')
 base class SingleValueObject<T extends Object> {
   const SingleValueObject(this.value);
 

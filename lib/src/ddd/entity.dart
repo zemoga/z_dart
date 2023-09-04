@@ -28,7 +28,7 @@ base class EntityId extends SingleValueObject<String>
   int compareTo(EntityId other) => value.compareTo(other.value);
 }
 
-///
+@Deprecated('Use Equatable on your custom entity to guarantee ID equality.')
 base class Entity<T> implements Identifiable<T> {
   const Entity(this.id);
 
