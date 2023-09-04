@@ -94,19 +94,19 @@ const jsonTreeList = [
         'name': 'item_A-A',
         'children': [
           {'name': 'item_A-A-A'},
-          {'name': 'item_A-A-B'}
-        ]
+          {'name': 'item_A-A-B'},
+        ],
       },
       {
         'name': 'item_A-B',
         'children': [
           {'name': 'item_A-B-A'},
-          {'name': 'item_A-B-B'}
-        ]
+          {'name': 'item_A-B-B'},
+        ],
       },
-    ]
+    ],
   },
-  {'name': 'item_B', 'children': []}
+  {'name': 'item_B', 'children': []},
 ];
 const jsonTreeListWithInvalidType = [
   {43: 'dfd'},
@@ -120,7 +120,7 @@ const jsonTreeWithInvalidChildrenValue = [
   {
     'name': 'item',
     'children': [
-      {'name': 'item_child'}
+      {'name': 'item_child'},
     ],
   }
 ];
