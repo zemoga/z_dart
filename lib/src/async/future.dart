@@ -19,9 +19,3 @@ extension FutureDoExtensions<T> on Future<T> {
     });
   }
 }
-
-extension FutureGuard<T> on Future<T> {
-  Future<AsyncValue<T>> guard() {
-    return then(AsyncValue.data).catchError(AsyncValue<T>.error);
-  }
-}
