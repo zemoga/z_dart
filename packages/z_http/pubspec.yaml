@@ -1,12 +1,12 @@
-name: z_dart
-description: Zemoga Dart library.
-version: 1.0.0-dev.33
+name: z_http
+description: Zemoga HTTP library.
+version: 1.0.0-dev.1
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
-  rxdart: ^0.27.3
+  http: ^1.1.0
 
 dev_dependencies:
   lints: ^2.1.1

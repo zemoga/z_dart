@@ -1,10 +1,15 @@
-part of z.dart.io;
+import 'dart:convert';
+import 'dart:io' show IOException, Cookie;
+
+import 'package:http/http.dart';
+
+export 'package:http/http.dart';
 
 class HttpException implements IOException {
+  HttpException(this.statusCode, this.message);
+
   final int statusCode;
   final String message;
-
-  HttpException(this.statusCode, this.message);
 
   @override
   String toString() =>
