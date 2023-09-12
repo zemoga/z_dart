@@ -1,6 +1,6 @@
 name: z_dart
 description: Zemoga Dart library.
-version: 1.0.0-dev.33
+version: 1.0.0-dev.34
 
 environment:
   sdk: '>=3.0.0 <4.0.0'

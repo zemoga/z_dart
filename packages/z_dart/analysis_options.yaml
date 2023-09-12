@@ -1,0 +1,18 @@
+include: package:lints/recommended.yaml
+
+analyzer:
+  exclude: [ build/**, lib/**.g.dart ]
+  language:
+    strict-raw-types: false
+
+linter:
+  rules:
+    - cancel_subscriptions
+    - camel_case_types
+    - require_trailing_commas
+    - avoid_positional_boolean_parameters
+    - prefer_constructors_over_static_methods
+    - prefer_single_quotes
+    - prefer_const_constructors
+    - use_super_parameters
+    - sort_constructors_first
