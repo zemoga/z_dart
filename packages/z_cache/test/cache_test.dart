@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:z_dart/cache.dart';
+import 'package:z_cache/cache.dart';
 
 typedef CollectionCache<T> = Cache<Map<String, T>>;
 

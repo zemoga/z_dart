@@ -1,4 +1,4 @@
-part of z.dart.cache;
+part of z.cache;
 
 ///
 final class Cache<T> {
@@ -28,7 +28,9 @@ extension MapCacheExt<K, V> on Cache<Map<K, V>> {
   Stream<List<V>> getAll() => stream.map((event) => event.values.toList());
 
   Stream<List<V>> where(bool Function(MapEntry<K, V> entry) test) {
-    return stream.map((event) => event.where(test).values.toList());
+    return stream.map(
+      (event) => event.entries.where(test).map((e) => e.value).toList(),
+    );
   }
 
   bool contains(K key) {
@@ -36,7 +38,9 @@ extension MapCacheExt<K, V> on Cache<Map<K, V>> {
   }
 
   void update(void Function(Map<K, V> data) block) {
-    data = Map.of(data).also(block);
+    final dataCopy = Map.of(data);
+    block(dataCopy);
+    data = dataCopy;
   }
 
   void put(K key, V value) {

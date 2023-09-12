@@ -1,13 +1,13 @@
-part of z.dart.cache;
+part of z.cache;
 
 ///
 final class CachePolicy {
-  final Duration expireAfter;
-  late DateTime _validationTime;
-
   CachePolicy({this.expireAfter = const Duration(minutes: 5)}) {
     invalidate();
   }
+
+  final Duration expireAfter;
+  late DateTime _validationTime;
 
   bool get isExpired =>
       DateTime.now().difference(_validationTime) > expireAfter;
