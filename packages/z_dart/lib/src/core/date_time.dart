@@ -22,4 +22,10 @@ extension DateTimeExt on DateTime {
       microsecond ?? this.microsecond,
     );
   }
+
+  bool isBetween(DateTime start, DateTime end) {
+    return isAtSameMomentAs(start) ||
+        isAtSameMomentAs(end) ||
+        (isAfter(start) & isBefore(end));
+  }
 }
