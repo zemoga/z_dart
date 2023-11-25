@@ -11,7 +11,7 @@ extension FutureDoExtensions<T> on Future<T> {
   }
 
   Future<T> doOnError(
-    void Function(Object, StackTrace) onError,
+    void Function(Object error, StackTrace stackTrace) onError,
   ) {
     return catchError((error, stackTrace) {
       onError(error, stackTrace);
