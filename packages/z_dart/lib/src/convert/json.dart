@@ -65,8 +65,7 @@ List<Map<String, dynamic>> jsonFlattenTreeList(
     final subNodes = node.remove(subNodesEntryKey);
     if (subNodes is List && subNodes.isNotEmpty) {
       // Clone sub-nodes and add the relational entries to it.
-      final validSubNodes =
-          subNodes.whereType<Map<String, dynamic>>().map((e) {
+      final validSubNodes = subNodes.whereType<Map<String, dynamic>>().map((e) {
         final subNode = Map.of(e);
         subNode.parentId = node.id;
         subNode.ancestorIds = [...node.ancestorIds, node.id];
@@ -91,8 +90,13 @@ List<Map<String, dynamic>> jsonFlattenTreeList(
 mixin JsonMapper<T> {
   T fromJson(Map jsonObj);
 
-  Map toJson(T t);
+  Map toJson(T value);
 
-  List<T> fromJsonArray(List jsonArray) =>
-      jsonArray.map((e) => fromJson(e)).toList();
+  List<T> fromJsonArray(List jsonArray) {
+    return jsonArray.map((e) => fromJson(e)).toList();
+  }
+
+  List toJsonArray(List<T> values) {
+    return values.map((e) => toJson(e)).toList();
+  }
 }
