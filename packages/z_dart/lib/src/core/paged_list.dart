@@ -1,4 +1,4 @@
-part of z.dart.core;
+part of '../../core.dart';
 
 class PagedList<E> {
   const PagedList(this.totalElements, this.elements);

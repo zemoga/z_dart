@@ -1,3 +1,3 @@
-part of z.dart.core;
+part of '../../core.dart';
 
 typedef Pair<A, B> = ({A first, B second});

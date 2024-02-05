@@ -1,4 +1,4 @@
-part of z.cache;
+part of '../cache.dart';
 
 ///
 final class Cache<T> {

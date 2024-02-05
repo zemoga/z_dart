@@ -1,4 +1,4 @@
-part of z.dart.core;
+part of '../../core.dart';
 
 extension IterableExt<E> on Iterable<E> {
   E? get firstOrNull {

@@ -1,4 +1,4 @@
-part of z.dart.core;
+part of '../../core.dart';
 
 extension StringExt on String {
   bool get isValidPhoneNumber {

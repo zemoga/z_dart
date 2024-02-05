@@ -1,4 +1,4 @@
-part of z.dart.core;
+part of '../../core.dart';
 
 extension DateTimeExt on DateTime {
   DateTime copyWith({

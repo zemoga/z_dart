@@ -1,4 +1,4 @@
-part of z.dart.async;
+part of '../../async.dart';
 
 extension MapListExtensions<E> on Stream<List<E>> {
   Stream<List<E>> mapWhere(bool Function(E element) test) =>

@@ -1,4 +1,4 @@
-part of z.dart.convert;
+part of '../../convert.dart';
 
 List jsonFilterTreeList(
   List nodes,
