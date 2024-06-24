@@ -2,6 +2,7 @@ library z.dart.core;
 
 export 'dart:core';
 
+part 'src/core/async_result.dart';
 part 'src/core/date_time.dart';
 part 'src/core/iterable.dart';
 part 'src/core/map.dart';

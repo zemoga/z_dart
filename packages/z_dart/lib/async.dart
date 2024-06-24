@@ -1,5 +1,9 @@
 library z.dart.async;
 
+import 'dart:async';
+
+import 'core.dart';
+
 export 'dart:async';
 
 export 'package:rxdart/rxdart.dart';
